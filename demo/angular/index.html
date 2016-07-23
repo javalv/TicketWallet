@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="angular.js" ></script>
+    <script src="app.js" ></script>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl">
+
+    <my-header title="headTitle" b-text-left=测试 b-text-right="帮助" left-fun="doHome()" ></my-header>
+    <my-header title="headTitle" b-text-left=测试1 b-text-right="帮助" left-fun="doHome()" style="top : 80px"></my-header>
+
+    <div style="position: absolute;top:100px" >
+        <input ng-model="name" />
+        <span style="color: red">{{name}}</span>
+
+        <div style="margin-top: 50px" ng-controller="childCtrl">
+            <button ng-click="scopeTest()">子作用域测试</button>
+        </div>
+    </div>
+
+
+    <div class="child-test " ng-class="{false: '', true: 'fill-yellow'}[isActive]" >
+
+    </div>
+
+</body>
+</html>

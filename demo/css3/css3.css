@@ -1,0 +1,52 @@
+div.div-transition
+{
+    width:100px;
+    height:100px;
+    background: #515151;
+    transition:all 1s;
+    -moz-transition:all 2s; /* Firefox 4 */
+    -webkit-transition:all 1s; /* Safari and Chrome */
+    -o-transition:all 2s; /* Opera */
+}
+
+div.div-transition:hover
+{
+    width:300px;
+    height:300px;
+}
+
+
+div.media{
+    width: 200px;
+    height: 100px;
+    background-color: silver;
+}
+
+@media screen and (max-height: 500px) {
+
+    div.media{
+        width: 200px;
+        height: 100px;
+        background-color: #007aff;
+    }
+
+}
+@media screen and (max-width: 800px) and (min-width: 500px) {
+
+    div.media{
+        width: 300px;
+        height: 150px;
+        background-color: red;
+    }
+
+}
+@media screen and (min-width: 800px) {
+
+    div.media{
+        width: 400px;
+        height: 200px;
+        background-color: #007aff;
+    }
+
+}
+

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Canvas Demo</title>
+	<!--[if It IE]>
+	<script type="text/javascript" src="./excanvas.js"></script>
+	<![endif]-->
+	<script>
+		//初始化
+		var arr = [];
+
+		var tempContext = null;
+
+		function init(){
+			var index = 0;
+			for(var i=0;i<500;i++){
+				for(var j=0;j<300;j++){
+					arr[index] = {x:i*23, y:j*23, width:20, height:20};
+					index++;
+				}
+			}
+
+
+		}
+
+		function initText(){
+			var canvas = document.getElementById("view")
+			if (canvas == null)
+				return false;
+			var context = canvas.getContext("2d");
+			context.beginPath();
+			context.strokeStyle = "rgba(255,0,0,0.5)";
+			context.strokeRect(0, 0, 20, 20);
+
+			context.fillStyle = "#00f";
+			context.font = "20px sans-serif";
+			context.textBaseline = 'top';
+			var txt="可售"
+			context.fillText(txt, 23, 0);
+
+			context.beginPath();
+			context.fillStyle = "green";
+			context.fillRect(70, 0, 20, 20)
+
+			context.fillStyle = "#00f";
+			context.font = "20px sans-serif";
+			context.textBaseline = 'top';
+			var txt="已售"
+			context.fillText(txt, 93, 0);
+		}
+
+		window.onload=function() {
+			//initText();
+
+			init();
+			var canvas = document.getElementById('myCanvas');
+			if (canvas.getContext){
+				var ctx = canvas.getContext('2d');
+				tempContext = ctx;
+
+				ctx.strokeStyle = "rgba(255,0,0,0.5)";
+
+				for(var index=0;index<150000;index++){
+					ctx.beginPath();
+					ctx.strokeRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+					//ctx.fill();
+				}
+
+					p = getEventPosition(e);
+				//添加事件响应
+				canvas.addEventListener('click', function(e){
+					//alert(p.x + "," + p.y);
+					reDraw(p,ctx);
+
+				}, false);
+
+				canvas.addEventListener("mousedown", doMouseDown, false);
+				canvas.addEventListener('mousemove', doMouseMove, false);
+				canvas.addEventListener('mouseup',   doMouseUp, false);
+
+
+			}
+		}
+		//得到点击的坐标
+		function getEventPosition(ev){
+			var x, y;
+			if (ev.layerX || ev.layerX == 0) {
+				x = ev.layerX;
+				y = ev.layerY;
+			}else if (ev.offsetX || ev.offsetX == 0) { // Opera
+				x = ev.offsetX;
+				y = ev.offsetY;
+			}
+			return {x: x, y: y};
+		}
+		//重绘
+		function reDraw(p,ctx){
+			ctx.strokeStyle = "rgba(100,0,0,0.5)";
+			ctx.fillStyle='blue';
+
+			//var whichObject = [];
+
+			for(var index=0;index<150000;index++){
+				if(isPointInPath(p,arr[index])){
+					ctx.beginPath();
+					if(make == true){
+						//tempContext.strokeStyle = "rgba(0,0,0,0)";
+						tempContext.fillStyle='blue';
+
+					}else{
+						tempContext.strokeStyle = "rgba(100,0,0,0.5)";
+						tempContext.fillStyle='white';
+					}
+					ctx.strokeRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+					ctx.fillRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+					break;
+				}
+			}
+
+
+			//显示点击了哪个部分
+			// alert("click:" + whichObject[0]);
+		}
+
+		function isPointInPath(p,selected){//Canvas提供的不给力
+
+			if(selected.x + 20 >= p.x && selected.x <= p.x && selected.y + 20 >= p.y && selected.y <= p.y){
+				return true;
+			}
+			return false;
+
+		}
+
+		var started = false;
+		var move_coordinate = [];
+		function doMouseDown(event) {
+			tempContext.strokeStyle='blue';
+			move_coordinate[0] = {x_start:-1,y_start:-1,x_end:-1,y_end:-1};
+			var x = event.pageX;
+			var y = event.pageY;
+			var canvas = event.target;
+			//var loc = getPointOnCanvas(canvas, x, y);
+			var loc = getEventPosition(event);
+			console.log("mouse down at point( x:" + loc.x + ", y:" + loc.y + ")");
+			tempContext.beginPath();
+			tempContext.moveTo(loc.x, loc.y);
+			started = true;
+		}
+
+		function doMouseMove(event) {
+			// var x = event.pageX;
+			//var y = event.pageY;
+			var canvas = event.target;
+			//var loc = getPointOnCanvas(canvas, x, y);
+			var loc = getEventPosition(event);
+			if (started) {
+				tempContext.lineTo(loc.x, loc.y);
+				tempContext.stroke();
+
+				var x = loc.x;
+				var y = loc.y;
+
+				// console.log(x,y);
+
+				if(move_coordinate[0].x_start < 0){
+					move_coordinate[0].x_start = x;
+				}
+				if(move_coordinate[0].y_start < 0){
+					move_coordinate[0].y_start = y;
+				}
+
+				if(x < move_coordinate[0].x_start){
+					move_coordinate[0].x_start = x;
+				}
+				if(x > move_coordinate[0].x_end){
+					move_coordinate[0].x_end = x;
+				}
+				if(y < move_coordinate[0].y_start){
+					move_coordinate[0].y_start = y;
+				}
+				if(y > move_coordinate[0].y_end){
+					move_coordinate[0].y_end = y;
+				}
+
+				//console.log(move_coordinate[0].x_start+"," + move_coordinate[0].x_end+"," + move_coordinate[0].y_start+"," + move_coordinate[0].y_end);
+			}
+
+
+		}
+
+		function doMouseUp(event) {
+			console.log("mouse up now");
+			if (started) {
+				doMouseMove(event);
+				started = false;
+			}
+			//alert(move_coordinate[0].x_start+"," + move_coordinate[0].x_end+"," + move_coordinate[0].y_start+"," + move_coordinate[0].y_end);
+
+
+			for(var index=0;index<150000;index++){
+				if(arr[index].x + 20 > move_coordinate[0].x_start && arr[index].x < move_coordinate[0].x_end &&
+						arr[index].y + 20 > move_coordinate[0].y_start && arr[index].y < move_coordinate[0].y_end){
+
+					//tempContext.clearRect(move_coordinate[0].x_start,move_coordinate[0].y_start,
+					//	move_coordinate[0].x_end-move_coordinate[0].x_start,move_coordinate[0].y_end - move_coordinate[0].y_start);//
+
+					//console.log(move_coordinate[0].x_start,move_coordinate[0].y_start,
+					//	move_coordinate[0].x_end - move_coordinate[0].x_start,move_coordinate[0].y_end - move_coordinate[0].y_start);
+
+
+					tempContext.beginPath();
+
+					//tempContext.clearRect(arr[index].x,arr[index].y,23,23);//
+
+					tempContext.fillStyle="ffffff";//白色为例子；
+					tempContext.fillRect(arr[index].x,arr[index].y,23,23);
+
+					if(make == true){
+						//tempContext.strokeStyle = "rgba(0,0,0,0)";
+						tempContext.fillStyle='blue';
+
+					}else{
+						tempContext.strokeStyle = "rgba(100,0,0,0.5)";
+						tempContext.fillStyle='white';
+					}
+					tempContext.fillRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+					tempContext.strokeRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+
+
+				}
+			}
+		}
+
+		var make = true;
+		function domake(a){
+			if(a == '1'){
+				make = true;
+				document.getElementById('x').disabled=true;
+				document.getElementById('q').disabled=false;
+			}
+			else{
+				make = false;
+				document.getElementById('q').disabled=true;
+				document.getElementById('x').disabled=false;
+			}
+		}
+
+
+		function scale(n){
+			tempContext.scale(n,n);
+			tempContext.clearRect(0,0,10000,10000);//
+
+			var canvas = document.getElementById('myCanvas');
+			if (canvas.getContext){
+
+				tempContext.strokeStyle = "rgba(255,0,0,0.5)";
+
+				for(var index=0;index<150000;index++){
+					tempContext.beginPath();
+					tempContext.strokeRect(arr[index].x,arr[index].y,arr[index].width,arr[index].height);
+					//ctx.fill();
+				}
+
+				//添加事件响应
+				canvas.addEventListener('click', function(e){
+					p = getEventPosition(e);
+					//alert(p.x + "," + p.y);
+					reDraw(p,tempContext);
+
+				}, false);
+
+				canvas.addEventListener("mousedown", doMouseDown, false);
+				canvas.addEventListener('mousemove', doMouseMove, false);
+				canvas.addEventListener('mouseup',   doMouseUp, false);
+
+
+			}
+		}
+		/*
+		 function getPointOnCanvas(canvas, x, y) {
+		 var bbox = canvas.getBoundingClientRect();
+		 return { x: x - bbox.left * (canvas.width  / bbox.width),
+		 y: y - bbox.top  * (canvas.height / bbox.height)
+		 };
+		 }
+		 */
+
+
+	</script>
+</head>
+<body>
+<div>
+	<table>
+		<tr><td><button onclick="domake(1);" id ="x">select</button></td>
+			<td><button onclick="domake(2);" id = "q">clear</button></td>
+			<td><button onclick="scale(2);" id = "b">zoom in</button></td>
+			<td><button onclick="scale(0.5);" id = "s">zoom out</button></td>
+		</tr>
+	</table>
+	<br/>
+	<canvas id="view" width="600px" height="30px"></canvas>
+	<canvas id="myCanvas" style="border: 1px solid red;" width="1200px" height="700px"></canvas>
+	<br />
+	<br />
+</div>
+</body>
+</html> 

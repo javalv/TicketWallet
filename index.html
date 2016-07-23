@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cache.amap.com/lbs/static/main1119.css"/>
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <!--<script src="lib/ionic/js/angular.angular.js"></script>-->
+    <!--<script src="lib/ionic/js/ionic.bundle.min.js"></script>-->
+    <script src="http://code.ionicframework.com/1.3.1/js/ionic.bundle.min.js"  ></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js" ></script>
+    <script src="js/directive.js" ></script>
+    <script src="js/controllers.js" ></script>
+    <script src="js/services.js" ></script>
+
+    <script src="lib/other/qrcode.js" ></script>
+    <!--<script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>-->
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=2bdd9c4fba01893ede441fa7e8876550&plugin=AMap.Driving,AMap.Geocoder"></script>
+
+    <!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0KzDtnrAVfdyBds7BV55rfzZ"></script>-->
+  </head>
+  <body >
+
+  <div id="a" style="display: block;height: 100%;width:100%;position: absolute">
+    <img src="img/damai.jpg" width="100%" height="100%">
+  </div>
+
+  <!--
+    The nav bar that will be updated as we navigate between views.
+  -->
+  <div id="b" style="display: none" ng-controller="firstCtrl">
+    <ion-side-menus>
+
+      <ion-side-menu-content drag-content="true" edge-drag-threshold=50>
+
+        <ion-header-bar class="bar-stable my-header" >
+          <a class="button button-clear icon ion-ios-arrow-left" ng-show="isShow"
+             go-back-hide ng-click="$ionicGoBack()" style="position:absolute; margin: auto 0px; font-size: 22px"></a>
+          <my-title style="margin: auto ; position:static; color: #616161; font-size: 20px;font-family: 黑体"></my-title>
+          <a menu-toggle="right" class="button button-clear icon tabs-icon-right ion-navicon" style="position: absolute; margin: auto 0px; font-size: 28px" ></a>
+        </ion-header-bar>
+
+        <ion-nav-view></ion-nav-view>
+
+      </ion-side-menu-content>
+
+      <ion-side-menu side="right" width="200">
+        <ion-header-bar class="bar-stable my-header" >
+          <h1 class="title" style="height: 54px;line-height: 54px;">
+            更多服务
+          </h1>
+        </ion-header-bar>
+        <ion-content>
+          <ul class="list">
+            <a ui-sref="list" ng-click="menuSelect('person')" menu-close class="item" ng-class="{'person': 'menu-select','paper': '','gear': ''}[menuSelected]" menu-toggle="right">
+              <i class="ion ion-android-person">
+                我的票夹
+              </i>
+            </a>
+            <a ui-sref="order" ng-click="menuSelect('paper')" menu-close class="item" ng-class="{'person': '','paper': 'menu-select','gear': ''}[menuSelected]" menu-toggle="right">
+              <i class="ion ion-ios-paper">
+                我的订单
+              </i>
+            </a>
+            <a ui-sref="account" ng-click="menuSelect('gear')" menu-close class="item" ng-class="{'person': '','paper': '','gear': 'menu-select'}[menuSelected]" menu-toggle="right">
+              <i class="ion ion-ios-gear">
+                设置
+              </i>
+            </a>
+          </ul>
+        </ion-content>
+      </ion-side-menu>
+
+    </ion-side-menus>
+
+  </div>
+
+  </body>
+
+  <script>
+    (function () {
+      setTimeout(function () {
+
+        wait(function () {
+
+                  angular.bootstrap(document, ['myApp']);
+                  window.document.getElementById("b").style.display = 'block';
+                  window.document.getElementById("b").style.opacity = '0.0';
+                }, function () {
+                  window.document.getElementById("b").style.opacity = '1';
+                  window.document.getElementById("a").style.display = 'none';
+                },
+                function () {
+                  if (typeof angular != 'undefined' && typeof app != 'undefined') {
+                    return true;
+                  }
+                  return false;
+                }
+        );
+
+      }, 200);
+    })();
+
+    function wait(doing, delayDoes, isOk) {
+      if (!isOk()) {
+        setTimeout(function () {
+          wait(doing, delayDoes, isOk);
+        }, 500);
+      } else {
+        doing();
+        setTimeout(function () {
+          delayDoes();
+        }, 1000);
+        return;
+      }
+    }
+  </script>
+
+</html>

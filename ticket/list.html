@@ -1,0 +1,94 @@
+<ion-view view-title="票夹">
+
+    <div class="bar bar-subheader ">
+        <div class="button-bar ">
+            <a ng-click="goStart()"
+               ng-class="{false: 'button button-clear button-dark', true: 'button button-assertive button-clear'}[isActive]">
+                <p class="font-a">即将开始</p></a>
+            <a ng-click="goEnd()"
+               ng-class="{true: 'button button-clear button-dark', false: 'button button-clear button-assertive'}[isActive]">
+                <p class="font-a">已结束</p></a>
+        </div>
+        <span class="line line-left" ng-class="{false: 'line line-right', true: 'line line-left'}[isActive] "></span>
+    </div>
+
+    <div class="has-subheader padding-top bg-div" >
+        <ion-slide-box  on-slide-changed="slideChanged($index)" show-pager="false" style="height:100%" does-continue="false">
+            <!-- 即将开始 -->
+            <ion-slide >
+                <ion-scroll direction="y" class="slide-scroll-div" >
+                    <ion-refresher pulling-text="" pulling-icon="ion-android-refresh" on-refresh="doRefresh()" spinner="ios"></ion-refresher>
+
+                    <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+                        <a ng-repeat="item in items" class="item-bg" ui-sref="detail({id:1})">
+                            <div class="bg-item">
+                                <div class="div-inline">
+                                    <img ng-src="{{item.pic}}" class="item-image p-img">
+                                </div>
+                                <div class="font-a font-a-black div-right div-inline" ng-style="isExpried">
+                                    <p style="font-size:16px; line-height:22px">{{item.name}}</p>
+                                    <p style="font-size:14px; line-height:15px; color: #888888">时间：{{item.time}}</p>
+                                    <p style="font-size:14px; line-height:15px; color: #888888">地点：{{item.venues}}</p>
+                                    <p style="font-size:14px; line-height:15px; color: #888888">座位：{{item.seat}}</p>
+                                    <p style="font-size:14px; line-height:15px; color: #888888"><span
+                                            class="ion ion-android-document"></span> 动态电子票</p>
+                                </div>
+                            </div>
+                        </a>
+                    </ion-list>
+                </ion-scroll>
+            </ion-slide>
+
+            <!-- 已结束 -->
+            <ion-slide >
+                <ion-scroll direction="y" class="slide-scroll-div" >
+                    <ion-refresher pulling-text="" on-refresh="doRefresh()" spinner="ios"></ion-refresher>
+
+                    <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+                        <a ng-repeat="item in endItems" class="item-bg my-item-content" ui-sref="detail({id:1})">
+                            <div class="bg-item">
+                                <div class="div-inline">
+                                    <img ng-src="{{item.pic}}" class="item-image p-img">
+                                </div>
+                                <div class="font-a font-a-black div-right div-inline" ng-style="isExpried">
+                                    <p style="font-size:16px; line-height:22px">{{item.name}}</p>
+                                    <p style="font-size:14px; line-height:15px">时间：{{item.time}}</p>
+                                    <p style="font-size:14px; line-height:15px">地点：{{item.venues}}</p>
+                                    <p style="font-size:14px; line-height:15px">座位：{{item.seat}}</p>
+                                    <p style="font-size:14px; line-height:15px; color: #a2a2a2"><span
+                                            class="ion ion-android-document"></span> 动态电子票</p>
+                                </div>
+                            </div>
+                        </a>
+                    </ion-list>
+                </ion-scroll>
+            </ion-slide>
+        </ion-slide-box>
+    </div>
+
+    <!--<ion-content class="has-subheader padding" style="background-color: #f2f2f2" overflow-scroll="true" >-->
+    <!--<ion-refresher pulling-text="" on-refresh="doRefresh()" spinner="ios">-->
+    <!--</ion-refresher>-->
+
+    <!--<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">-->
+    <!--<a ng-repeat="item in items" class="item-bg my-item-content" ui-sref="detail({id:1})"  >-->
+    <!--<div class="bg-item" >-->
+    <!--<div class="div-inline">-->
+    <!--<img ng-src="{{item.pic}}" class="item-image p-img" >-->
+    <!--</div>-->
+    <!--<div class="font-a font-a-black div-right div-inline" ng-style="isExpried">-->
+    <!--<p style="font-size:16px; line-height:22px">{{item.name}}</p>-->
+    <!--<p style="font-size:14px; line-height:15px">时间：{{item.time}}</p>-->
+    <!--<p style="font-size:14px; line-height:15px">地点：{{item.venues}}</p>-->
+    <!--<p style="font-size:14px; line-height:15px">座位：{{item.seat}}</p>-->
+    <!--<p style="font-size:14px; line-height:15px; color: #a2a2a2"><span class="ion ion-android-document" ></span> 动态电子票</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</a>-->
+    <!--</ion-list>-->
+    <!--</ion-content>-->
+
+
+</ion-view>
+
+

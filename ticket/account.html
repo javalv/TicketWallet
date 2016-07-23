@@ -1,0 +1,125 @@
+<ion-view view-title="我的">
+<ion-content style="background-color: #f2f2f2">
+
+    <a class="button-full" style="margin-top: 20px">
+
+    </a>
+
+    <ion-list class="list">
+
+        <a class="item item-icon-right item-avatar-left" ui-sref="camera">
+            <img id="accountImg" src="img/czp.png" >
+            <h2>非生非物</h2>
+            <p>做自己心灵的工程师</p>
+            <!--<i class="icon ion-ios-telephone-outline" ></i>-->
+        </a>
+
+        <!--<div class="item item-avatar-left " >-->
+            <!--<img id="accountImg" src="img/czp.png" ui-sref="camera">-->
+            <!--<h2>非生非物</h2>-->
+            <!--<p>做自己心灵的工程师</p>-->
+            <!--<i class="icon ion-android-download royal "></i>-->
+        <!--</div>-->
+
+    </ion-list>
+
+    <a class="button-full" style="margin-top: 20px">
+
+    </a>
+
+    <ul class="list">
+        <a class="item item-icon-left" ng-click="openModal();">
+            <i class="icon ion-person calm  energized"></i>
+            账号设置
+        </a>
+
+
+    </ul>
+
+    <div class="list">
+
+
+        <a class="item item-icon-left" ng-click="barScan()" >
+            <i class="icon ion-ios-photos balanced"></i>
+            收藏
+        </a>
+
+        <a class="item item-icon-left" ng-click="vibration()">
+            <i class="icon ion-android-download royal "></i>
+            云服务
+            <span class="item-note">
+              已关闭
+            </span>
+        </a>
+
+        <a class="item item-icon-left" ng-click="echo()">
+            <i class="icon ion-person-stalker positive"></i>
+            朋友圈
+            <span class="badge badge-assertive">1</span>
+        </a>
+
+    </div>
+
+    <a class="button-full" style="margin-top: 20px">
+
+
+    </a>
+
+
+    <div class="list">
+
+        <li class="item item-icon-left item-toggle">
+            <i class="icon ion-chatbubble-working calm"></i>
+            消息接收
+            <label class="toggle toggle-assertive">
+                <input type="checkbox">
+                <div class="track">
+                    <div class="handle"></div>
+                </div>
+            </label>
+        </li>
+
+        <a class="item item-icon-left" href="#">
+            <i class="icon ion-android-share-alt assertive"></i>
+            分享
+        </a>
+
+    </div>
+
+
+
+</ion-content>
+
+</ion-view>
+
+<script id="my-modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar-assertive">
+            <h1 class="title">账号设置</h1>
+            <a class="button" ng-click="closeModal();">关闭</a>
+
+            <!--<a class="button" ng-click="removeModal();">remove</a>-->
+        </ion-header-bar>
+        <ion-content>
+
+            <div class="padding">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">姓名</span>
+                        <input ng-model="newUser.firstName" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">密码</span>
+                        <input ng-model="newUser.lastName" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">邮箱</span>
+                        <input ng-model="newUser.email" type="text">
+                    </label>
+                    <button class="button button-full button-assertive" ng-click="closeModal()">保存</button>
+                </div>
+            </div>
+
+        </ion-content>
+    </ion-modal-view>
+</script>

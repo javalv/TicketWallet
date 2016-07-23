@@ -1,0 +1,86 @@
+<ion-view view-title="查看电子票" >
+<div class="bg-content-div">
+
+    <ion-scroll class="has-header" direction="" style="width:100%;height:100%;" >
+        <ion-slide-box on-slide-changed="slideChanged(index)" >
+            <ion-slide ng-repeat="item in items">
+                <div>
+                    <div class="bg-detail" ng-style="detailWidth" >
+
+                        <ion-list >
+                            <ion-item class="detail-item-noborder detail-item" >
+                                <div class="row">
+                                    <div class="col col-top" ng-click="openModal();">
+                                        <qr-code refresh="refresh"></qr-code>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col" style="text-align:center" >
+                                        <p class="font-b"><span style="font-size: 18px; color: red">{{countdown}}</span>秒后刷新</p>
+                                    </div>
+                                </div>
+                            </ion-item>
+
+                            <ion-item class="detail-item detail-item1 detail-item2">
+                                <div class="row ">
+                                    <div class="col col-66" >
+                                        <p>演出时间</p>
+                                        <p>2015.10.25 20:30</p>
+                                    </div>
+                                    <div class="col col-34"  ui-sref="map">
+                                        <a class="button button-assertive icon-left ion-ios-location button-clear">兑换点</a>
+                                    </div>
+                                </div>
+                            </ion-item>
+
+                            <ion-item class="detail-a detail-item2 detail-item3" >
+                                <h2>{{item.name}}</h2>
+                                <p>场馆： 鸟巢国家体育馆</p>
+                                <p>座位： 9排 14号</p>
+                                <p>票价： 800.00</p>
+                            </ion-item>
+                        </ion-list>
+                    </div>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+
+
+    </ion-scroll>
+
+</div>
+
+</ion-view>
+
+<script id="my-modal.html" type="text/ng-template">
+    <ion-modal-view>
+        <ion-header-bar class="bar-dark my-header" style="background-color: #616161">
+            <h1 class="title">验票</h1>
+
+        </ion-header-bar>
+
+        <ion-content style="background-color: #616161 ">
+
+            <div class="bg-detail" ng-style="detailWidth" >
+
+                <ion-list>
+                    <ion-item class="detail-item-noborder detail-item" >
+                        <div class="row">
+                            <div class="col col-top" ng-click="closeModal();">
+                                <qr-code refresh="refresh" ng-style="bigCodeImgWidth"></qr-code>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="text-align:center">
+                                <p class="font-b"><span style="font-size: 18px; color: red">{{countdown}}</span>秒后刷新</p>
+                            </div>
+                        </div>
+                    </ion-item>
+
+                </ion-list>
+            </div>
+
+        </ion-content>
+    </ion-modal-view>
+</script>

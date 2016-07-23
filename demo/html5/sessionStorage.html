@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script>
+        window.sessionStorage.name = 'rainman';           // 赋值
+        window.sessionStorage.setItem('name','cnblogs');  // 赋值
+        window.sessionStorage.getItem('name');            // 取值
+        //        window.sessionStorage.removeItem('name');         // 移除值
+        //        window.sessionStorage.clear();
+        function removeOne(){
+            window.sessionStorage.removeItem('name');
+        }
+
+        function put(key,value){
+            window.sessionStorage.setItem(key,value);
+        }
+
+        function set(){
+            var key = document.getElementById("key").value;
+            var value = document.getElementById("value").value;
+            put(key,value);
+        }
+    </script>
+</head>
+<body>
+
+    <button onclick="removeOne();">Clear</button>
+
+    <div>
+        <input id="key" value="" />
+        <input id="value" value="" />
+    </div>
+    <button onclick="set();">Set</button>
+
+</body>
+</html>
