@@ -5,9 +5,59 @@
     <title></title>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <circle cx="100" cy="50" r="40" stroke="black"
-            stroke-width="2" fill="red" />
+<!--<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="600"-->
+     <!--viewBox="0 0 100 75" style="border: blue solid 1px;">-->
+    <!--<g transform="translate(30,30) rotate(-30) translate(30,30) scale(1,1)">-->
+        <!--&lt;!&ndash; 固定viewBox, 关键是确定原始SVG的宽高 &ndash;&gt;-->
+        <!--<circle cx="10" cy="10" r="10" fill="red" stroke="black" stroke-width="1" />-->
+        <!--<circle cx="30" cy="10" r="10" fill="blue"/>-->
+    <!--</g>-->
+<!--</svg>-->
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="600"
+     viewBox="0 0 100 75" style="border: blue solid 1px;">
+    <g id="g_seat"></g>
+    <defs>
+        <circle id="seat" r="5"/>
+    </defs>
 </svg>
+<button onclick="doScale()">放大</button>
 </body>
 </html>
+<script src="data/data.js" ></script>
+<script>
+    var SVG_NS = "http://www.w3.org/2000/svg";
+    var XLINK_NS = "http://www.w3.org/1999/xlink";
+    function use(obj) {
+        var _use = document.createElementNS(SVG_NS,'use');
+        _use.setAttributeNS(XLINK_NS,'xlink:href','#'+obj.id);
+        return _use;
+    }
+
+    function render(){
+        var seat = document.getElementById('seat');
+        var g_seat = document.getElementById('g_seat');
+        var data = seats.data;
+        var obj;
+        data.forEach(function (o,index) {
+            obj = use(seat);
+            var x = (o.x + 0.5) * 10;
+            var y = (o.y + 0.5) * 10;
+            obj.setAttribute('x',x);
+            obj.setAttribute('y',y);
+//            obj.setAttribute('r',10);
+
+            g_seat.appendChild(obj);
+        })
+    }
+
+    function doScale() {
+        var g_seat = document.getElementById('g_seat');
+        scale(g_seat,1.5);
+    }
+    function scale(obj,value) {
+        obj.setAttribute('transform','scale(' + value + ',' + value +')');
+    }
+
+    render();
+</script>
