@@ -14,14 +14,30 @@
     <!--</g>-->
 <!--</svg>-->
 
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="800" height="600"
-     viewBox="0 0 100 75" style="border: blue solid 1px;">
-    <g id="g_seat"></g>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="400" height="300"
+     viewBox="0 0 80 60" style="border: blue solid 1px;">
+    <g id="all_view">
+        <g id="g_seat"></g>
+        <g id="g1">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#seat" x="1" y="1"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#seat" x="3" y="1"></use>
+        </g>
+        <g id="g2">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#seat" x="77" y="59"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#seat" x="79" y="57"></use>
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#seat" x="79" y="59"></use>
+        </g>
+    </g>
+
     <defs>
-        <circle id="seat" r="5"/>
+        <circle id="seat" r="1"/>
     </defs>
 </svg>
 <button onclick="doScale()">放大</button>
+<button onclick="zoomIn()">缩小</button>
+<button onclick="init('g_seat')">还原</button>
+<button onclick="init('g1')">G1</button>
+<button onclick="init('g2')">G2</button>
 </body>
 </html>
 <script src="data/data.js" ></script>
@@ -41,8 +57,8 @@
         var obj;
         data.forEach(function (o,index) {
             obj = use(seat);
-            var x = (o.x + 0.5) * 10;
-            var y = (o.y + 0.5) * 10;
+            var x = (o.x + 0.5) * 2;
+            var y = (o.y + 0.5) * 2;
             obj.setAttribute('x',x);
             obj.setAttribute('y',y);
 //            obj.setAttribute('r',10);
@@ -52,12 +68,63 @@
     }
 
     function doScale() {
-        var g_seat = document.getElementById('g_seat');
-        scale(g_seat,1.5);
+        var all_view = document.getElementById('all_view');
+        var obj = document.getElementById('g_seat');
+        scale(obj,1.5,all_view);
     }
-    function scale(obj,value) {
-        obj.setAttribute('transform','scale(' + value + ',' + value +')');
+    //居中并缩放
+    function scale(obj,value,whole) {
+        var g_seat=obj;
+        var box = g_seat.getBBox();
+        console.log(box);
+
+        var x = box.x + box.width / 2;
+        var y = box.y + box.height / 2;
+        var translate_x = 40 - x;
+        var translate_y = 30 - y;
+        console.log(translate_x + ',' + translate_y);
+
+//        obj.setAttribute('transform','translate('+translate_x+' '+translate_y+')') ;
+
+
+//        var scale_x = translate_x / value;
+//        var scale_y = translate_y / value;
+
+        var scale_x = 40/value - x ;
+        var scale_y = 30/value - y ;
+
+
+        console.log(scale_x,scale_y);
+
+//        obj.setAttribute('transform','scale(' + value + ',' + value +')');
+
+        whole.setAttribute('transform','scale(' + value + ',' + value +') ' +
+                 'translate('+scale_x+' '+scale_y+') ');
+
+//        obj.setAttribute('transform','translate('+translate_x+' '+translate_y+') ' +
+//                'scale(' + value + ',' + value +') ' +
+//                'translate(' + scale_x +' '+ scale_y +')');
+
+//        obj.setAttribute('transform','scale(' + value + ',' + value +') translate(-20 0)');
+
+
     }
+
+    //缩小
+    function zoomIn(){
+        var all_view = document.getElementById('all_view');
+        var obj = document.getElementById('g_seat');
+        scale(obj,0.67,all_view);
+    }
+
+    function init(id){
+        var all_view = document.getElementById('all_view');
+        var obj = document.getElementById(id);
+        scale(obj,1,all_view);
+    }
+
+
+
 
     render();
 </script>
